@@ -95,7 +95,7 @@ public class Robot extends TimedRobot {
     rearRight.set(.5);
 
     Thread.sleep(2000);
-
+  
     frontLeft.stopMotor();
     frontRight.stopMotor();
     rearLeft.stopMotor();
