@@ -25,6 +25,8 @@ public class Robot extends TimedRobot {
   private MecanumDrive robotDrive;
   private Joystick stick;
 
+  private Intake intake;
+
   @Override
   public void robotInit() {
 
