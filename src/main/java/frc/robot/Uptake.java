@@ -4,8 +4,25 @@ import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 
 public class Uptake 
 {
-    VictorSP uptakeMotor = new VictorSP(5);
-    VictorSP buptakeMotor = new VictorSP(6);
+    /**
+     * Top uptake motor controller, 775pro
+     */
+    private VictorSP uptakeMotor;
+    /**
+     * Bottom uptake motor controller, 775pro
+     */
+    private VictorSP buptakeMotor;
+
+    /**
+     * Uptake Constructor, instantiates uptake motor controllers
+     *
+     * @param topIndex The PWM index of the top motor controller
+     * @param bottomIndex The PWM index of the bottom motor controller
+     */
+    public Uptake(int topIndex, int bottomIndex){
+        uptakeMotor = new VictorSP(topIndex);
+        buptakeMotor = new VictorSP(bottomIndex);
+    }
 
     public void runAutonomousStart(){
         uptakeMotor.set(.5);

@@ -18,10 +18,13 @@ public class Robot extends TimedRobot {
   private static final int kFrontRightChannel = 3;
   private static final int kRearRightChannel = 4;
 
-  private static final int kJoystickChannel = 0;
+  private static final int kJoystickChannelDriver = 0;
+  private static final int kJoystickChannelOperator = 1;
 
-  private final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
-  private Joystick stick;
+  private final ADXRS450_Gyro gyro;
+
+  private Joystick driver;
+  private Joystick operator;
 
   private WPI_TalonFX frontLeft;
   private WPI_TalonFX rearLeft;
@@ -30,6 +33,7 @@ public class Robot extends TimedRobot {
   private MecanumDrive robotDrive;
 
   private Intake intake;
+  private Uptake uptake;
 
   private double prevx = 0;
   private double prevy = 0;
@@ -52,9 +56,15 @@ public class Robot extends TimedRobot {
     rearLeft.setNeutralMode(NeutralMode.Coast);
     rearRight.setNeutralMode(NeutralMode.Coast);
 
+    gyro = new ADXRS450_Gyro();
+
     robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-    stick = new Joystick(kJoystickChannel);
+    intake = new Intake(7,8,0,1,.5,.5);
+    uptake = new Uptake(5,6);
+
+    driver = new Joystick(kJoystickChannel);
+    operator = new joystick(kJoystickChannelOperator);
   }
 
   private static double smooth(double val, double deadzone, double max) {
@@ -83,8 +93,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     // Comment out the uptake if another team has better auto.
-    Uptake uptake = new Uptake();
-
     uptake.runAutonomousStart();
     Thread.sleep(2500);
     uptake.runAutonomousEnd();
@@ -100,8 +108,6 @@ public class Robot extends TimedRobot {
     frontRight.stopMotor();
     rearLeft.stopMotor();
     rearRight.stopMotor();
-
-    Uptake uptake = new Uptake();
   }
 
   @Override
@@ -114,9 +120,9 @@ public class Robot extends TimedRobot {
     // Use the joystick X axis for lateral movement, Y axis for forward
     // movement, and Z axis for rotation.
 
-    double x = -stick.getRawAxis(0);
-    double y = stick.getRawAxis(1);
-    double z = stick.getRawAxis(2);
+    double x = -driver.getRawAxis(0);
+    double y = driver.getRawAxis(1);
+    double z = driver.getRawAxis(2);
 
     x = smooth(x, .05, .9);
     y = smooth(y, .05, .9);
@@ -126,10 +132,10 @@ public class Robot extends TimedRobot {
     y = safety(y, prevy, .3);
     z = safety(z, prevz, .3);
 
-    if (stick.getPOV() == -1) {
+    if (driver.getPOV() == -1) {
       robotDrive.driveCartesian(y, x, z);
     } else {
-      robotDrive.drivePolar(.2, stick.getPOV(), 0.0);
+      robotDrive.drivePolar(.2, driver.getPOV(), 0.0);
     }
 
     prevx = x;

@@ -30,11 +30,11 @@ public class Intake {
      */
     public double liftSpeed;
 
-    public Intake(VictorSP spinner, VictorSP lifter, DigitalInput liftDownSwitch, DigitalInput liftUpSwitch, double spinSpeed, double liftSpeed) {
-        this.spinner = spinner;
-        this.lifter = lifter;
-        this.liftDownSwitch = liftDownSwitch;
-        this.liftUpSwitch = liftUpSwitch;
+    public Intake(int spinnerIndex, int lifterIndex, int liftDownSwitchIndex, int liftUpSwitchIndex, double spinSpeed, double liftSpeed) {
+        spinner = new VictorSP(spinnerIndex);
+        lifter = new VictorSP(lifterIndex);
+        liftDownSwitch = new DigitalInput(liftDownSwitchIndex);
+        liftUpSwitch = new DigitalInput(liftUpSwitchIndex);
         this.spinSpeed = spinSpeed;
         this.liftSpeed = liftSpeed;
     }
@@ -42,10 +42,10 @@ public class Intake {
     /**
      * set the spinner to some arbitrary speed
      * 
-     * @param speed SPeed
+     * @param speed Speed
      */
     public void setSpin(double speed) {
-        spinner.set(spinSpeed);
+        spinner.set(speed);
     }
 
     /**
