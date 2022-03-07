@@ -20,20 +20,27 @@ public class Robot extends TimedRobot {
 
   private static final int kJoystickChannel = 0;
 
-  ADXRS450_Gyro gyro = new ADXRS450_Gyro();
-
-  private MecanumDrive robotDrive;
+  private final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
   private Joystick stick;
+
+  private WPI_TalonFX frontLeft;
+  private WPI_TalonFX rearLeft;
+  private WPI_TalonFX frontRight;
+  private WPI_TalonFX rearRight;
+  private MecanumDrive robotDrive;
 
   private Intake intake;
 
+  private double prevx = 0;
+  private double prevy = 0;
+  private double prevz = 0;
+
   @Override
   public void robotInit() {
-
-    WPI_TalonFX frontLeft = new WPI_TalonFX(kFrontLeftChannel);
-    WPI_TalonFX rearLeft = new WPI_TalonFX(kRearLeftChannel);
-    WPI_TalonFX frontRight = new WPI_TalonFX(kFrontRightChannel);
-    WPI_TalonFX rearRight = new WPI_TalonFX(kRearRightChannel);
+    frontLeft = new WPI_TalonFX(kFrontLeftChannel);
+    rearLeft = new WPI_TalonFX(kRearLeftChannel);
+    frontRight = new WPI_TalonFX(kFrontRightChannel);
+    rearRight = new WPI_TalonFX(kRearRightChannel);
 
     // Invert the right side motors.
     // You may need to change or remove this to match your robot.
@@ -50,40 +57,32 @@ public class Robot extends TimedRobot {
     stick = new Joystick(kJoystickChannel);
   }
 
-  private static double smooth(double val, double deadzone, double max){
-
-    if(Math.abs((val)) < deadzone){
+  private static double smooth(double val, double deadzone, double max) {
+    if (Math.abs((val)) < deadzone) {
       return 0;
     } else if (val > max) {
       return max;
     } else {
       return Math.abs(val) * Math.abs(val) * (val / Math.abs(val));
-
     }
   }
 
   private static double safety(double cmdVal, double prevVal, double maxChange) {
-		double diff = cmdVal - prevVal;
-		if (Math.abs(diff) < maxChange) {
-			return cmdVal;
-		} else {
-			if (diff > 0) {
-				return prevVal + maxChange;
-			} else {
-				return prevVal - maxChange;
-			}
-		
-        }
+    double diff = cmdVal - prevVal;
+    if (Math.abs(diff) < maxChange) {
+      return cmdVal;
+    } else {
+      if (diff > 0) {
+        return prevVal + maxChange;
+      } else {
+        return prevVal - maxChange;
+      }
     }
-
-
-  double prevx = 0;
-  double prevy = 0;
-  double prevz = 0;
+  }
 
   @Override
-  public void autonomousInit(){
-// Comment out the uptake if another team has better auto.
+  public void autonomousInit() {
+    // Comment out the uptake if another team has better auto.
     Uptake uptake = new Uptake();
 
     uptake.runAutonomousStart();
@@ -95,20 +94,21 @@ public class Robot extends TimedRobot {
     rearLeft.set(.5);
     rearRight.set(.5);
 
-    Thread.sleep(2000)
-  
-    frontLeft.stopMotor()
-    frontRight.stopMotor()
-    rearLeft.stopMotor()
-    rearRight.stopMotor()
+    Thread.sleep(2000);
+
+    frontLeft.stopMotor();
+    frontRight.stopMotor();
+    rearLeft.stopMotor();
+    rearRight.stopMotor();
 
     Uptake uptake = new Uptake();
-
   }
+
   @Override
-  public void autonomousPeriodic(){
+  public void autonomousPeriodic() {
 
   }
+
   @Override
   public void teleopPeriodic() {
     // Use the joystick X axis for lateral movement, Y axis for forward
@@ -126,7 +126,7 @@ public class Robot extends TimedRobot {
     y = safety(y, prevy, .3);
     z = safety(z, prevz, .3);
 
-    if(stick.getPOV() == -1){
+    if (stick.getPOV() == -1) {
       robotDrive.driveCartesian(y, x, z);
     } else {
       robotDrive.drivePolar(.2, stick.getPOV(), 0.0);
@@ -136,5 +136,4 @@ public class Robot extends TimedRobot {
     prevy = y;
     prevz = z;
   }
-  
 }
