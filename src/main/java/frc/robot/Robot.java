@@ -21,7 +21,7 @@ public class Robot extends TimedRobot {
   private static final int kJoystickChannelDriver = 0;
   private static final int kJoystickChannelOperator = 1;
 
-  private final ADXRS450_Gyro gyro;
+  private ADXRS450_Gyro gyro; // currently unused
 
   private Joystick driver;
   private Joystick operator;
@@ -63,8 +63,8 @@ public class Robot extends TimedRobot {
     intake = new Intake(7,8,0,1,.5,.5);
     uptake = new Uptake(5,6);
 
-    driver = new Joystick(kJoystickChannel);
-    operator = new joystick(kJoystickChannelOperator);
+    driver = new Joystick(kJoystickChannelDriver);
+    operator = new Joystick(kJoystickChannelOperator);
   }
 
   private static double smooth(double val, double deadzone, double max) {
@@ -94,7 +94,12 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     // Comment out the uptake if another team has better auto.
     uptake.runAutonomousStart();
-    Thread.sleep(2500);
+
+    try {
+      Thread.sleep(2500);              // will not work without catching errors
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
     uptake.runAutonomousEnd();
 
     frontLeft.set(.5);
@@ -102,7 +107,11 @@ public class Robot extends TimedRobot {
     rearLeft.set(.5);
     rearRight.set(.5);
 
-    Thread.sleep(2000);
+    try {
+      Thread.sleep(2000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
   
     frontLeft.stopMotor();
     frontRight.stopMotor();
@@ -120,9 +129,9 @@ public class Robot extends TimedRobot {
     // Use the joystick X axis for lateral movement, Y axis for forward
     // movement, and Z axis for rotation.
 
-    double x = -driver.getRawAxis(0);
-    double y = driver.getRawAxis(1);
-    double z = driver.getRawAxis(2);
+    double x = -driver.getRawAxis(Constants.FLIGHT_X_AXIS);
+    double y = driver.getRawAxis(Constants.FLIGHT_Y_AXIS);
+    double z = driver.getRawAxis(Constants.FLIGHT_Z_AXIS);
 
     x = smooth(x, .05, .9);
     y = smooth(y, .05, .9);
@@ -142,10 +151,22 @@ public class Robot extends TimedRobot {
     prevy = y;
     prevz = z;
 
-    uptake.runMotor(operator.getRawButton(6),operator.getRawButton(7));
+    uptake.runMotor(operator.getRawButton(Constants.XBOX_RBUMPER_BUTTON),operator.getRawButton(Constants.XBOX_RBUMPER_BUTTON));
 
-    if(operator.getRawButton(1)){
-        intake.liftDown()
+    if(operator.getRawButton(Constants.XBOX_B_BUTTON)){
+        intake.liftDown();
+    } else if (operator.getRawButton(Constants.XBOX_Y_BUTTON)){
+        intake.liftUp();
+    } else {
+        intake.liftStop();
+    }
+
+    if(operator.getRawButton(Constants.XBOX_A_BUTTON)){
+        intake.spinIn();
+    } else if (operator.getRawButton(Constants.XBOX_X_BUTTON)){
+        intake.spinOut();
+    } else {
+        intake.spinStop();
     }
   }
 }
