@@ -95,12 +95,12 @@ public class Robot extends TimedRobot {
     rearLeft.set(.5);
     rearRight.set(.5);
 
-    Thread.sleep(2000)
+    Thread.sleep(2000);
   
-    frontLeft.stopMotor()
-    frontRight.stopMotor()
-    rearLeft.stopMotor()
-    rearRight.stopMotor()
+    frontLeft.stopMotor();
+    frontRight.stopMotor();
+    rearLeft.stopMotor();
+    rearRight.stopMotor();
 
     Uptake uptake = new Uptake();
 
