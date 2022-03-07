@@ -141,5 +141,11 @@ public class Robot extends TimedRobot {
     prevx = x;
     prevy = y;
     prevz = z;
+
+    uptake.runMotor(operator.getRawButton(6),operator.getRawButton(7));
+
+    if(operator.getRawButton(1)){
+        intake.liftDown()
+    }
   }
 }
