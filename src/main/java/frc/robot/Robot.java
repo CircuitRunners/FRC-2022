@@ -13,13 +13,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
 public class Robot extends TimedRobot {
-  private static final int kFrontLeftChannel = 1;
-  private static final int kRearLeftChannel = 2;
-  private static final int kFrontRightChannel = 3;
-  private static final int kRearRightChannel = 4;
-
-  private static final int kJoystickChannelDriver = 0;
-  private static final int kJoystickChannelOperator = 1;
 
   private ADXRS450_Gyro gyro; // currently unused
 
@@ -41,10 +34,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    frontLeft = new WPI_TalonFX(kFrontLeftChannel);
-    rearLeft = new WPI_TalonFX(kRearLeftChannel);
-    frontRight = new WPI_TalonFX(kFrontRightChannel);
-    rearRight = new WPI_TalonFX(kRearRightChannel);
+    frontLeft = new WPI_TalonFX(Constants.kFrontLeftChannel);
+    rearLeft = new WPI_TalonFX(Constants.kRearLeftChannel);
+    frontRight = new WPI_TalonFX(Constants.kFrontRightChannel);
+    rearRight = new WPI_TalonFX(Constants.kRearRightChannel);
 
     // Invert the right side motors.
     // You may need to change or remove this to match your robot.
@@ -60,11 +53,11 @@ public class Robot extends TimedRobot {
 
     robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-    intake = new Intake(7,8,0,1,.5,.5);
-    uptake = new Uptake(5,6);
+    intake = new Intake(Constants.intakeSpinMotorIndex, Constants.intakeLiftMotorIndex, Constants.intakeLimitSwitchBottomIndex,Constants.intakeLimitSwitchTopIndex,.5,.5);
+    uptake = new Uptake(Constants.uptakeTopMotorIndex, Constants.uptakeBottomMotorIndex);
 
-    driver = new Joystick(kJoystickChannelDriver);
-    operator = new Joystick(kJoystickChannelOperator);
+    driver = new Joystick(Constants.kJoystickChannelDriver);
+    operator = new Joystick(Constants.kJoystickChannelOperator);
   }
 
   private static double smooth(double val, double deadzone, double max) {

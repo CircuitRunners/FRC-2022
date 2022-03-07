@@ -23,4 +23,21 @@ public class Constants {
     public static final int XBOX_START_BUTTON = 8;
     public static final int XBOX_LSTICK_BUTTON = 9;
     public static final int XBOX_RSTICK_BUTTON = 10;
+
+
+
+    public static final int kFrontLeftChannel = 1;
+    public static final int kRearLeftChannel = 2;
+    public static final int kFrontRightChannel = 3;            // MIGRATE THESE TO Constants.java AT SOME POINT
+    public static final int kRearRightChannel = 4;
+  
+    public static final int kJoystickChannelDriver = 0;
+    public static final int kJoystickChannelOperator = 1;
+
+    public static final int intakeLiftMotorIndex = 7;
+    public static final int intakeSpinMotorIndex = 8;
+
+    public static final int intakeLimitSwitchBottomIndex = 0;
+    public static final int intakeLimitSwitchTopIndex = 1;
+  
 }
