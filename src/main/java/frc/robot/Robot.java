@@ -82,6 +82,34 @@ public class Robot extends TimedRobot {
   double prevz = 0;
 
   @Override
+  public void autonomousInit(){
+// Comment out the uptake if another team has better auto.
+  Uptake uptake = new Uptake();
+
+  uptake.runAutonomousStart();
+  Thread.sleep(2500);
+  uptake.runAutonomousEnd();
+
+  frontLeft.set(.5);
+  frontRight.set(.5);
+  rearLeft.set(.5);
+  rearRight.set(.5);
+
+  Thread.sleep(2000)
+  
+  frontLeft.stopMotor()
+  frontRight.stopMotor()
+  rearLeft.stopMotor()
+  rearRight.stopMotor()
+
+  Uptake uptake = new Uptake();
+
+  }
+  @Override
+  public void autonomousPeriodic(){
+
+  }
+  @Override
   public void teleopPeriodic() {
     // Use the joystick X axis for lateral movement, Y axis for forward
     // movement, and Z axis for rotation.
