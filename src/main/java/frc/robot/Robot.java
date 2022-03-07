@@ -84,25 +84,25 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit(){
 // Comment out the uptake if another team has better auto.
-  Uptake uptake = new Uptake();
+    Uptake uptake = new Uptake();
 
-  uptake.runAutonomousStart();
-  Thread.sleep(2500);
-  uptake.runAutonomousEnd();
+    uptake.runAutonomousStart();
+    Thread.sleep(2500);
+    uptake.runAutonomousEnd();
 
-  frontLeft.set(.5);
-  frontRight.set(.5);
-  rearLeft.set(.5);
-  rearRight.set(.5);
+    frontLeft.set(.5);
+    frontRight.set(.5);
+    rearLeft.set(.5);
+    rearRight.set(.5);
 
-  Thread.sleep(2000)
+    Thread.sleep(2000)
   
-  frontLeft.stopMotor()
-  frontRight.stopMotor()
-  rearLeft.stopMotor()
-  rearRight.stopMotor()
+    frontLeft.stopMotor()
+    frontRight.stopMotor()
+    rearLeft.stopMotor()
+    rearRight.stopMotor()
 
-  Uptake uptake = new Uptake();
+    Uptake uptake = new Uptake();
 
   }
   @Override
