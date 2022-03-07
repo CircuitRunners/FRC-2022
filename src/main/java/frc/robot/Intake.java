@@ -30,14 +30,13 @@ public class Intake {
      */
     public double liftSpeed;
 
-    /**
-     * Remember to set speeds after initializing
-     */
-    public Intake(VictorSP spinner, VictorSP lifter, DigitalInput liftDownSwitch, DigitalInput liftUpSwitch) {
+    public Intake(VictorSP spinner, VictorSP lifter, DigitalInput liftDownSwitch, DigitalInput liftUpSwitch, double spinSpeed, double liftSpeed) {
         this.spinner = spinner;
         this.lifter = lifter;
         this.liftDownSwitch = liftDownSwitch;
         this.liftUpSwitch = liftUpSwitch;
+        this.spinSpeed = spinSpeed;
+        this.liftSpeed = liftSpeed;
     }
 
     /**
