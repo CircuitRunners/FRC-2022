@@ -93,16 +93,16 @@ public class Robot extends TimedRobot {
     uptake.runAutonomousStart();
 
     try {
-      Thread.sleep(2500);              // will not work without catching errors
+      Thread.sleep(2000);              // will not work without catching errors
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
     uptake.runAutonomousEnd();
 
-    frontLeft.set(.5);
-    frontRight.set(.5);
-    rearLeft.set(.5);
-    rearRight.set(.5);
+    frontLeft.set(.65);
+    frontRight.set(.65);
+    rearLeft.set(.65);
+    rearRight.set(.65);
 
     try {
       Thread.sleep(2000);
