@@ -13,6 +13,9 @@ public class Uptake
      */
     private VictorSP buptakeMotor;
 
+    /**
+     * Motor power
+     */
     private double speed = 0.5;
 
     /**
@@ -26,16 +29,27 @@ public class Uptake
         buptakeMotor = new VictorSP(bottomIndex);
     }
 
+    /**
+     * Sets the motors to run during autonomous
+     */
     public void runAutonomousStart() {
         uptakeMotor.set(speed);
         buptakeMotor.set(speed);
     }
 
+    /**
+     * Sets the motors to stop during autonomous
+     */
     public void runAutonomousEnd() {
         uptakeMotor.stopMotor();
         buptakeMotor.stopMotor();
     }
     
+    /**
+     * Runs the motor depending on which button is pressed
+     * @param aButton the button that causes the motors to run forwards
+     * @param bButton the button that causes the motors to run backwards
+     */
     public void runMotor(Boolean aButton, Boolean bButton)
     {
         double axis = 0;
