@@ -5,28 +5,28 @@ import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 
 public class Intake {
     /**
-     * the motor that turns the wheels to grab the Game Elements
+     * Motor that spins the compliant wheels.
      */
     private VictorSP spinner;
     /**
-     * motor that spins to lift the intake up or down
+     * Motor that turns the intake up or down.
      */
     private VictorSP lifter;
     /**
-     * switch that checks if the lift is down
+     * Switch that checks if the lift is down.
      */
     private DigitalInput liftDownSwitch;
     /**
-     * switch that checks if the lift is up
+     * Switch that checks if the lift is up.
      */
     private DigitalInput liftUpSwitch;
 
     /**
-     * spin motor power
+     * Spinner motor power.
      */
     public double spinSpeed;
     /**
-     * lift motor power
+     * Lifter motor power.
      */
     public double liftSpeed;
 
@@ -40,7 +40,7 @@ public class Intake {
     }
 
     /**
-     * set the spinner to some arbitrary speed
+     * Set the spinner to some arbitrary speed.
      * 
      * @param speed Speed
      */
@@ -49,7 +49,7 @@ public class Intake {
     }
 
     /**
-     * spin inward to absorb Game Elements
+     * Spin inward to grab things.
      * 
      * @see #spinSpeed
      */
@@ -58,7 +58,7 @@ public class Intake {
     }
 
     /**
-     * spin outward, opposite of {@link #spinIn}
+     * Spin outward (opposite of {@link #spinIn})
      * 
      * @see #spinSpeed
      */
@@ -67,14 +67,14 @@ public class Intake {
     }
 
     /**
-     * stop spinning entirely
+     * Stop spinning entirely.
      */
     public void spinStop() {
         spinner.stopMotor();
     }
 
     /**
-     * raise the intake
+     * Raise the intake.
      */
     public void liftUp() {
         if (!liftUpSwitch.get()) {
@@ -85,7 +85,7 @@ public class Intake {
     }
 
     /**
-     * drop the intake
+     * Lower the intake.
      */
     public void liftDown() {
         if (!liftDownSwitch.get()) {
@@ -96,7 +96,7 @@ public class Intake {
     }
     
     /**
-     * Stop the lifter
+     * Stop moving the intake.
      */
     public void liftStop() {
         lifter.stopMotor();
