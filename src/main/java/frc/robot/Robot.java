@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
+import edu.wpi.first.cameraserver.CameraServer;
+
 public class Robot extends TimedRobot {
 
   private ADXRS450_Gyro gyro; // currently unused
@@ -38,6 +40,8 @@ public class Robot extends TimedRobot {
     rearLeft = new WPI_TalonFX(Constants.kRearLeftChannel);
     frontRight = new WPI_TalonFX(Constants.kFrontRightChannel);
     rearRight = new WPI_TalonFX(Constants.kRearRightChannel);
+    
+    CameraServer.startAutomaticCapture();
 
     // Invert the right side motors.
     // You may need to change or remove this to match your robot.
