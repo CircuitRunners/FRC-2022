@@ -37,6 +37,9 @@ public class Constants {
     public static final int intakeLiftMotorIndex = 7;
     public static final int intakeSpinMotorIndex = 8;
 
+    public static final int uptakeTopMotorIndex = 5; // PLACEHOLDER INDEX
+    public static final int uptakeBottomMotorIndex = 6; // PLACEHOLDER INDEX
+
     public static final int intakeLimitSwitchBottomIndex = 0;
     public static final int intakeLimitSwitchTopIndex = 1;
   
