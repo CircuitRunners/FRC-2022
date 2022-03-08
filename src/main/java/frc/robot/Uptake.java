@@ -30,8 +30,8 @@ public class Uptake
     }
 
     public void runAutonomousEnd(){
-        uptakeMotor.set(.5);
-        buptakeMotor.set(.5);
+        uptakeMotor.stopMotor();
+        buptakeMotor.stopMotor();
     }
     
     public void runMotor(Boolean aButton, Boolean bButton)
