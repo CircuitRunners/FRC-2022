@@ -56,8 +56,18 @@ public class Robot extends TimedRobot {
 
     robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-    //intake = new Intake(Constants.intakeSpinMotorIndex, Constants.intakeLiftMotorIndex, Constants.intakeLimitSwitchBottomIndex,Constants.intakeLimitSwitchTopIndex,.5,.5);
-    //uptake = new Uptake(Constants.uptakeTopMotorIndex, Constants.uptakeBottomMotorIndex);
+    /*
+    intake = new Intake(
+      Constants.intakeSpinMotorIndex,
+      Constants.intakeLiftMotorIndex,
+      Constants.intakeLimitSwitchBottomIndex,
+      Constants.intakeLimitSwitchTopIndex,
+      .5,
+      .5);
+    uptake = new Uptake(
+      Constants.uptakeTopMotorIndex,
+      Constants.uptakeBottomMotorIndex);
+    */
 
     driver = new Joystick(Constants.kJoystickChannelDriver);
     operator = new Joystick(Constants.kJoystickChannelOperator);
@@ -92,16 +102,13 @@ public class Robot extends TimedRobot {
     //uptake.runAutonomousStart();
 
     try {
-      Thread.sleep(2000);
+      Thread.sleep(3000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
     //uptake.runAutonomousEnd();
 
-    frontLeft.set(.65);
-    frontRight.set(.65);
-    rearLeft.set(.65);
-    rearRight.set(.65);
+    robotDrive.driveCartesian(.65, 0, 0);
 
     try {
       Thread.sleep(2000);
@@ -109,10 +116,7 @@ public class Robot extends TimedRobot {
       e.printStackTrace();
     }
   
-    frontLeft.stopMotor();
-    frontRight.stopMotor();
-    rearLeft.stopMotor();
-    rearRight.stopMotor();
+    robotDrive.stopMotor();
   }
 
   @Override

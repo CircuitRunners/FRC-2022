@@ -28,7 +28,7 @@ public class Constants {
 
     public static final int kFrontLeftChannel = 1;
     public static final int kRearLeftChannel = 2;
-    public static final int kFrontRightChannel = 3;            // MIGRATE THESE TO Constants.java AT SOME POINT
+    public static final int kFrontRightChannel = 3;
     public static final int kRearRightChannel = 4;
   
     public static final int kJoystickChannelDriver = 0;
