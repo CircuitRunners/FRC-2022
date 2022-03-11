@@ -5,58 +5,83 @@ import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 public class Uptake 
 {
     /**
-     * Top uptake motor controller, 775pro
+     * Top uptake motor controller, 775pro.
      */
-    private VictorSP uptakeMotor;
+    private VictorSP topMotor;
     /**
-     * Bottom uptake motor controller, 775pro
+     * Bottom uptake motor controller, 775pro.
      */
-    private VictorSP buptakeMotor;
+    private VictorSP bottomMotor;
 
     /**
-     * Motor power.
+     * Motor power when turning outward.
      */
-    private double speed = 0.5;
+    private double outPower = 0.4;
 
     /**
-     * Uptake Constructor, instantiates uptake motor controllers
+     * Motor power when turning inward.
+     */
+    private double inPower = 0.5;
+
+    /**
+     * Instantiates uptake motor controllers.
      *
-     * @param topIndex The PWM index of the top motor controller
-     * @param bottomIndex The PWM index of the bottom motor controller
+     * @param topIndex The PWM index of the top motor controller.
+     * @param bottomIndex The PWM index of the bottom motor controller.
      */
     public Uptake(int topIndex, int bottomIndex) {
-        uptakeMotor = new VictorSP(topIndex);
-        buptakeMotor = new VictorSP(bottomIndex);
+        topMotor = new VictorSP(topIndex);
+        bottomMotor = new VictorSP(bottomIndex);
+    }
+
+    public Uptake(int topIndex, int bottomIndex, double outPower, double inPower) {
+        this(topIndex, bottomIndex);
+        this.outPower = outPower;
+        this.inPower = inPower;
     }
 
     /**
      * Sets the motors to run during autonomous
      */
     public void runAutonomousStart() {
-        uptakeMotor.set(speed);
-        buptakeMotor.set(speed);
+        topMotor.set(outPower);
+        bottomMotor.set(outPower);
     }
 
     /**
-     * Sets the motors to stop during autonomous
+     * Sets the motors to stop during autonomous.
      */
     public void runAutonomousEnd() {
-        uptakeMotor.stopMotor();
-        buptakeMotor.stopMotor();
+        topMotor.stopMotor();
+        bottomMotor.stopMotor();
     }
     
     /**
-     * Runs the motor depending on which button is pressed
+     * Runs the motors according to an axis.
      * 
-     * @param aButton the button that causes the motors to run forwards
-     * @param bButton the button that causes the motors to run backwards
+     * If the axis is positive, {@link #outPower} is used.
+     * Otherwise, {@link #inPower} is used.
+     * 
+     * @param axis The axis.
      */
-    public void runMotor(Boolean aButton, Boolean bButton)
+    public void set(double axis) {
+        // Positive: Outward; Negative: Inward
+        double power = (axis > 0) ? outPower : inPower;
+
+        topMotor.set(axis * power);
+        bottomMotor.set(axis * power);
+    }
+    
+    /**
+     * Runs the motors depending on what buttons are pressed.
+     * 
+     * @param positive the button that causes the motors to run forwards.
+     * @param negative the button that causes the motors to run backwards.
+     */
+    public void set(boolean positive, boolean negative)
     {
-        double axis = Util.buttonAxis(aButton, bButton);
-        
-        uptakeMotor.set(axis * speed);
-        buptakeMotor.set(axis * speed);
+        double axis = Util.buttonAxis(positive, negative);
+        set(axis);
     }
 }
 

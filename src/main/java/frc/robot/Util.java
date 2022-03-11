@@ -16,18 +16,18 @@ public class Util {
      * 
      * <hr>
      * 
-     * @param pos The positive input.
-     * @param neg The negative input.
-     * @return The axis, within range of -1 to 1.
+     * @param positive The positive input.
+     * @param negative The negative input.
+     * @return The axis, within a range of -1 to 1.
      */
-    public static double buttonAxis(boolean pos, boolean neg) {
+    public static double buttonAxis(boolean positive, boolean negative) {
         double axis = 0;
         
-        if (pos) {
+        if (positive) {
             axis += 1;
         }
 
-        if (neg) {
+        if (negative) {
             axis -= 1;
         }
 

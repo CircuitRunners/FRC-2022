@@ -68,9 +68,7 @@ public class Robot extends TimedRobot {
       Constants.intakeSpinMotorIndex,
       Constants.intakeLiftMotorIndex,
       Constants.intakeLimitSwitchBottomIndex,
-      Constants.intakeLimitSwitchTopIndex,
-      .5,
-      .5);
+      Constants.intakeLimitSwitchTopIndex);
     */
     uptake = new Uptake(
       Constants.uptakeTopMotorIndex,
@@ -81,7 +79,7 @@ public class Robot extends TimedRobot {
   }
 
   private static double smooth(double val, double deadzone, double max) {
-    if (Math.abs((val)) < deadzone) {
+    if (Math.abs(val) < deadzone) {
       return 0;
     } else if (val > max) {
       return max;
@@ -106,14 +104,14 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     // Comment out the uptake if another team has better auto.
-    //uptake.runAutonomousStart();
+    uptake.runAutonomousStart();
 
     try {
       Thread.sleep(2000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    //uptake.runAutonomousEnd();
+    uptake.runAutonomousEnd();
 
     robotDrive.driveCartesian(.8, 0, 0);
 
@@ -158,8 +156,8 @@ public class Robot extends TimedRobot {
     prevy = y;
     prevz = z;
 
-    // TODO: Ask if the buttons should be swapped
-    uptake.runMotor(
+    // TODO: Ask if the buttons should be swapped?
+    uptake.set(
       operator.getRawButton(Constants.XBOX_LBUMPER_BUTTON),
       operator.getRawButton(Constants.XBOX_RBUMPER_BUTTON));
 

@@ -24,25 +24,29 @@ public class Intake {
     /**
      * Spinner motor power.
      */
-    public double spinSpeed;
+    public double spinSpeed = 0.5;
     /**
      * Lifter motor power.
      */
-    public double liftSpeed;
+    public double liftSpeed = 0.5;
 
-    public Intake(int spinnerIndex, int lifterIndex, int liftDownSwitchIndex, int liftUpSwitchIndex, double spinSpeed, double liftSpeed) {
+    public Intake(int spinnerIndex, int lifterIndex, int liftDownSwitchIndex, int liftUpSwitchIndex) {
         spinner = new VictorSP(spinnerIndex);
         lifter = new VictorSP(lifterIndex);
         liftDownSwitch = new DigitalInput(liftDownSwitchIndex);
         liftUpSwitch = new DigitalInput(liftUpSwitchIndex);
+    }
+
+    public Intake(int spinnerIndex, int lifterIndex, int liftDownSwitchIndex, int liftUpSwitchIndex, double spinSpeed, double liftSpeed) {
+        this(spinnerIndex, lifterIndex, liftDownSwitchIndex, liftUpSwitchIndex);
         this.spinSpeed = spinSpeed;
         this.liftSpeed = liftSpeed;
     }
 
     /**
-     * Spin according to an axis from -1 to 1.
+     * Spin according to an axis.
      * 
-     * @param axis The axis
+     * @param axis The axis.
      */
     public void spinAxis(double axis) {
         if (axis != 0) {
@@ -62,7 +66,7 @@ public class Intake {
     }
 
     /**
-     * Spin outward (opposite of {@link #spinIn})
+     * Spin outward (opposite of {@link #spinIn}).
      * 
      * @see #spinSpeed
      */
@@ -80,7 +84,7 @@ public class Intake {
     /**
      * Turn the intake according to an axis.
      * 
-     * @param axis axis
+     * @param axis The axis.
      */
     public void liftAxis(double axis) {
         boolean liftSwitch;
