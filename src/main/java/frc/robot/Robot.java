@@ -116,7 +116,7 @@ public class Robot extends TimedRobot {
     robotDrive.driveCartesian(-0.8, 0, 0);
 
     try {
-      Thread.sleep(4000);
+      Thread.sleep(5000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }

@@ -16,12 +16,12 @@ public class Uptake
     /**
      * Motor power when turning outward.
      */
-    private double outPower = 0.4;
+    private double outPower = 0.6;
 
     /**
      * Motor power when turning inward.
      */
-    private double inPower = 0.5;
+    private double inPower = 0.7;
 
     /**
      * Instantiates uptake motor controllers.
