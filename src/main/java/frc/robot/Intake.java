@@ -40,12 +40,16 @@ public class Intake {
     }
 
     /**
-     * Set the spinner to some arbitrary speed.
+     * Spin according to an axis from -1 to 1.
      * 
-     * @param speed Speed
+     * @param axis The axis
      */
-    public void setSpin(double speed) {
-        spinner.set(speed);
+    public void spinAxis(double axis) {
+        if (axis != 0) {
+            spinner.set(axis * spinSpeed);
+        } else {
+            spinStop();
+        }
     }
 
     /**
@@ -71,6 +75,29 @@ public class Intake {
      */
     public void spinStop() {
         spinner.stopMotor();
+    }
+
+    /**
+     * Turn the intake according to an axis.
+     * 
+     * @param axis axis
+     */
+    public void liftAxis(double axis) {
+        boolean liftSwitch;
+        if (axis > 0) {
+            liftSwitch = liftUpSwitch.get();
+        } else if (axis < 0) {
+            liftSwitch = liftDownSwitch.get();
+        } else {
+            liftStop();
+            return;
+        }
+
+        if (!liftSwitch) {
+            lifter.set(axis * liftSpeed);
+        } else {
+            liftStop();
+        }
     }
 
     /**

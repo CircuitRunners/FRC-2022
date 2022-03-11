@@ -52,14 +52,8 @@ public class Uptake
      */
     public void runMotor(Boolean aButton, Boolean bButton)
     {
-        double axis = 0;
-        if (aButton) {
-            axis += 1;
-        }
-        if (bButton) {
-            axis -= 1;
-        }
-
+        double axis = Util.buttonAxis(aButton, bButton);
+        
         uptakeMotor.set(axis * speed);
         buptakeMotor.set(axis * speed);
     }

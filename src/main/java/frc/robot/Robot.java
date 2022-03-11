@@ -15,8 +15,7 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.cameraserver.CameraServer;
 
 public class Robot extends TimedRobot {
-
-  private ADXRS450_Gyro gyro; // currently unused
+  private ADXRS450_Gyro gyro;
 
   private Joystick driver;
   private Joystick operator;
@@ -27,8 +26,8 @@ public class Robot extends TimedRobot {
   private WPI_TalonFX rearRight;
   private MecanumDrive robotDrive;
 
-  private Intake intake;
-  private Uptake uptake;
+  //private Intake intake;
+  //private Uptake uptake;
 
   private double prevx = 0;
   private double prevy = 0;
@@ -57,8 +56,8 @@ public class Robot extends TimedRobot {
 
     robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-    intake = new Intake(Constants.intakeSpinMotorIndex, Constants.intakeLiftMotorIndex, Constants.intakeLimitSwitchBottomIndex,Constants.intakeLimitSwitchTopIndex,.5,.5);
-    uptake = new Uptake(Constants.uptakeTopMotorIndex, Constants.uptakeBottomMotorIndex);
+    //intake = new Intake(Constants.intakeSpinMotorIndex, Constants.intakeLiftMotorIndex, Constants.intakeLimitSwitchBottomIndex,Constants.intakeLimitSwitchTopIndex,.5,.5);
+    //uptake = new Uptake(Constants.uptakeTopMotorIndex, Constants.uptakeBottomMotorIndex);
 
     driver = new Joystick(Constants.kJoystickChannelDriver);
     operator = new Joystick(Constants.kJoystickChannelOperator);
@@ -90,14 +89,14 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     // Comment out the uptake if another team has better auto.
-    uptake.runAutonomousStart();
+    //uptake.runAutonomousStart();
 
     try {
-      Thread.sleep(2000);              // will not work without catching errors
+      Thread.sleep(2000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    uptake.runAutonomousEnd();
+    //uptake.runAutonomousEnd();
 
     frontLeft.set(.65);
     frontRight.set(.65);
@@ -148,22 +147,20 @@ public class Robot extends TimedRobot {
     prevy = y;
     prevz = z;
 
-    uptake.runMotor(operator.getRawButton(Constants.XBOX_RBUMPER_BUTTON),operator.getRawButton(Constants.XBOX_RBUMPER_BUTTON));
+    /*
+    uptake.runMotor(
+      operator.getRawButton(Constants.XBOX_RBUMPER_BUTTON),
+      operator.getRawButton(Constants.XBOX_RBUMPER_BUTTON));
 
-    if(operator.getRawButton(Constants.XBOX_B_BUTTON)){
-        intake.liftDown();
-    } else if (operator.getRawButton(Constants.XBOX_Y_BUTTON)){
-        intake.liftUp();
-    } else {
-        intake.liftStop();
-    }
+    double liftAxis = Util.buttonAxis(
+      operator.getRawButton(Constants.XBOX_B_BUTTON),
+      operator.getRawButton(Constants.XBOX_Y_BUTTON));
+    intake.liftAxis(liftAxis);
 
-    if(operator.getRawButton(Constants.XBOX_A_BUTTON)){
-        intake.spinIn();
-    } else if (operator.getRawButton(Constants.XBOX_X_BUTTON)){
-        intake.spinOut();
-    } else {
-        intake.spinStop();
-    }
+    double spinAxis = Util.buttonAxis(
+      operator.getRawButton(Constants.XBOX_A_BUTTON),
+      operator.getRawButton(Constants.XBOX_X_BUTTON));
+    intake.spinAxis(spinAxis);
+    */
   }
 }
