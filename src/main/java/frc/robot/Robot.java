@@ -27,7 +27,7 @@ public class Robot extends TimedRobot {
   private MecanumDrive robotDrive;
 
   //private Intake intake;
-  //private Uptake uptake;
+  private Uptake uptake;
 
   private double prevx = 0;
   private double prevy = 0;
@@ -71,10 +71,10 @@ public class Robot extends TimedRobot {
       Constants.intakeLimitSwitchTopIndex,
       .5,
       .5);
+    */
     uptake = new Uptake(
       Constants.uptakeTopMotorIndex,
       Constants.uptakeBottomMotorIndex);
-    */
 
     driver = new Joystick(Constants.kJoystickChannelDriver);
     operator = new Joystick(Constants.kJoystickChannelOperator);
@@ -158,11 +158,12 @@ public class Robot extends TimedRobot {
     prevy = y;
     prevz = z;
 
-    /*
+    // TODO: Ask if the buttons should be swapped
     uptake.runMotor(
-      operator.getRawButton(Constants.XBOX_RBUMPER_BUTTON),
+      operator.getRawButton(Constants.XBOX_LBUMPER_BUTTON),
       operator.getRawButton(Constants.XBOX_RBUMPER_BUTTON));
 
+    /*
     double liftAxis = Util.buttonAxis(
       operator.getRawButton(Constants.XBOX_B_BUTTON),
       operator.getRawButton(Constants.XBOX_Y_BUTTON));

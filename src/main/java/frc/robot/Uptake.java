@@ -14,7 +14,7 @@ public class Uptake
     private VictorSP buptakeMotor;
 
     /**
-     * Motor power
+     * Motor power.
      */
     private double speed = 0.5;
 
@@ -47,6 +47,7 @@ public class Uptake
     
     /**
      * Runs the motor depending on which button is pressed
+     * 
      * @param aButton the button that causes the motors to run forwards
      * @param bButton the button that causes the motors to run backwards
      */
