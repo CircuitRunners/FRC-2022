@@ -127,7 +127,7 @@ public class Robot extends TimedRobot {
     robotDrive.driveCartesian(-0.8, 0, 0);
 
     try {
-      Thread.sleep(6000);
+      Thread.sleep(6500);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
@@ -145,8 +145,8 @@ public class Robot extends TimedRobot {
     // Use the joystick X axis for lateral movement, Y axis for forward
     // movement, and Z axis for rotation.
 
-    double x = -driver.getRawAxis(Constants.FLIGHT_X_AXIS);
-    double y = driver.getRawAxis(Constants.FLIGHT_Y_AXIS);
+    double x = driver.getRawAxis(Constants.FLIGHT_X_AXIS);
+    double y = -driver.getRawAxis(Constants.FLIGHT_Y_AXIS);
     double z = driver.getRawAxis(Constants.FLIGHT_Z_AXIS);
 
     x = smooth(x, .05, .9);
