@@ -18,7 +18,7 @@ public class Robot extends TimedRobot {
   private ADXRS450_Gyro gyro;
 
   private Joystick driver;
-  private Joystick operator;
+  //private Joystick operator;
 
   private WPI_TalonFX frontLeft;
   private WPI_TalonFX rearLeft;
@@ -75,7 +75,7 @@ public class Robot extends TimedRobot {
       Constants.uptakeBottomMotorIndex);
 
     driver = new Joystick(Constants.kJoystickChannelDriver);
-    operator = new Joystick(Constants.kJoystickChannelOperator);
+    //operator = new Joystick(Constants.kJoystickChannelOperator);
   }
 
   private static double smooth(double val, double deadzone, double max) {
@@ -113,7 +113,7 @@ public class Robot extends TimedRobot {
     }
     uptake.runAutonomousEnd();
 
-    robotDrive.driveCartesian(.8, 0, 0);
+    robotDrive.driveCartesian(-0.8, 0, 0);
 
     try {
       Thread.sleep(4000);
@@ -156,10 +156,9 @@ public class Robot extends TimedRobot {
     prevy = y;
     prevz = z;
 
-    // TODO: Ask if the buttons should be swapped?
     uptake.set(
-      operator.getRawButton(Constants.XBOX_LBUMPER_BUTTON),
-      operator.getRawButton(Constants.XBOX_RBUMPER_BUTTON));
+      driver.getRawButton(Constants.FLIGHT_TRIGGER_BUTTON),
+      driver.getRawButton(Constants.FLIGHT_MIDDLE_BUTTON));
 
     /*
     double liftAxis = Util.buttonAxis(

@@ -5,6 +5,11 @@ public class Constants {
     public static final int FLIGHT_X_AXIS = 0;
     public static final int FLIGHT_Z_AXIS = 2;
 
+    public static final int FLIGHT_TRIGGER_BUTTON = 1;
+    public static final int FLIGHT_MIDDLE_BUTTON = 2;
+    public static final int FLIGHT_LEFT_BUTTON = 3;
+    public static final int FLIGHT_RIGHT_BUTTON = 4;
+
 
     public static final int XBOX_L_X_AXIS = 0;
     public static final int XBOX_L_Y_AXIS = 1; // REVERSE THIS VALUE
@@ -37,7 +42,7 @@ public class Constants {
     public static final int intakeLiftMotorIndex = 7;
     public static final int intakeSpinMotorIndex = 8;
 
-    public static final int uptakeTopMotorIndex = 5; // PLACEHOLDER INDEX
+    public static final int uptakeTopMotorIndex = 0; // PLACEHOLDER INDEX
     public static final int uptakeBottomMotorIndex = 6; // PLACEHOLDER INDEX
 
     public static final int intakeLimitSwitchBottomIndex = 0;

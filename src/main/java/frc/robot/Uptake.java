@@ -11,7 +11,7 @@ public class Uptake
     /**
      * Bottom uptake motor controller, 775pro.
      */
-    private VictorSP bottomMotor;
+    //private VictorSP bottomMotor;
 
     /**
      * Motor power when turning outward.
@@ -31,7 +31,7 @@ public class Uptake
      */
     public Uptake(int topIndex, int bottomIndex) {
         topMotor = new VictorSP(topIndex);
-        bottomMotor = new VictorSP(bottomIndex);
+        //bottomMotor = new VictorSP(bottomIndex);
     }
 
     public Uptake(int topIndex, int bottomIndex, double outPower, double inPower) {
@@ -44,16 +44,16 @@ public class Uptake
      * Sets the motors to run during autonomous
      */
     public void runAutonomousStart() {
-        topMotor.set(outPower);
-        bottomMotor.set(outPower);
+        //topMotor.set(outPower);
+        //bottomMotor.set(outPower);
     }
 
     /**
      * Sets the motors to stop during autonomous.
      */
     public void runAutonomousEnd() {
-        topMotor.stopMotor();
-        bottomMotor.stopMotor();
+        //topMotor.stopMotor();
+        //bottomMotor.stopMotor();
     }
     
     /**
@@ -69,7 +69,7 @@ public class Uptake
         double power = (axis > 0) ? outPower : inPower;
 
         topMotor.set(axis * power);
-        bottomMotor.set(axis * power);
+        //bottomMotor.set(axis * power);
     }
     
     /**
