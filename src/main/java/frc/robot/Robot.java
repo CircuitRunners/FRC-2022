@@ -29,15 +29,26 @@ public class Robot extends TimedRobot {
   //private Intake intake;
   private Uptake uptake;
 
-  private double prevx = 0;
-  private double prevy = 0;
-  private double prevz = 0;
+  private double prevX = 0;
+  private double prevY = 0;
+  private double prevZ = 0;
 
-  // power multipliers
+  /**
+   * Power multiplier for the Y-axis, for vertical movement.
+   */
   private double yPower = 1;
+  /**
+   * Power multiplier for the X-axis, for horizontal movement.
+   */
   private double xPower = 1;
+  /**
+   * Power multiplier for the Z-axis, for rotation.
+   */
   private double zPower = 0.5;
-  // POV control magnitude
+
+  /**
+   * Magnitude for POV control.
+   */
   private double precisePower = 0.2;
 
   @Override
@@ -116,7 +127,7 @@ public class Robot extends TimedRobot {
     robotDrive.driveCartesian(-0.8, 0, 0);
 
     try {
-      Thread.sleep(5000);
+      Thread.sleep(6000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
@@ -142,9 +153,9 @@ public class Robot extends TimedRobot {
     y = smooth(y, .05, .9);
     z = smooth(z, .05, .7);
 
-    x = safety(x, prevx, .3);
-    y = safety(y, prevy, .3);
-    z = safety(z, prevz, .3);
+    x = safety(x, prevX, .3);
+    y = safety(y, prevY, .3);
+    z = safety(z, prevZ, .3);
 
     if (driver.getPOV() == -1) {
       robotDrive.driveCartesian(y * yPower, x * xPower, z * zPower);
@@ -152,9 +163,9 @@ public class Robot extends TimedRobot {
       robotDrive.drivePolar(precisePower, driver.getPOV(), 0.0);
     }
 
-    prevx = x;
-    prevy = y;
-    prevz = z;
+    prevX = x;
+    prevY = y;
+    prevZ = z;
 
     uptake.set(
       driver.getRawButton(Constants.FLIGHT_TRIGGER_BUTTON),

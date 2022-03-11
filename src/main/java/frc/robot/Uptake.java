@@ -44,7 +44,7 @@ public class Uptake
      * Sets the motors to run during autonomous
      */
     public void runAutonomousStart() {
-        //topMotor.set(outPower);
+        topMotor.set(outPower);
         //bottomMotor.set(outPower);
     }
 
@@ -52,7 +52,7 @@ public class Uptake
      * Sets the motors to stop during autonomous.
      */
     public void runAutonomousEnd() {
-        //topMotor.stopMotor();
+        topMotor.stopMotor();
         //bottomMotor.stopMotor();
     }
     
