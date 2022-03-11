@@ -33,6 +33,13 @@ public class Robot extends TimedRobot {
   private double prevy = 0;
   private double prevz = 0;
 
+  // power multipliers
+  private double yPower = 1;
+  private double xPower = 1;
+  private double zPower = 0.5;
+  // POV control magnitude
+  private double precisePower = 0.2;
+
   @Override
   public void robotInit() {
     frontLeft = new WPI_TalonFX(Constants.kFrontLeftChannel);
@@ -102,16 +109,16 @@ public class Robot extends TimedRobot {
     //uptake.runAutonomousStart();
 
     try {
-      Thread.sleep(3000);
+      Thread.sleep(2000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
     //uptake.runAutonomousEnd();
 
-    robotDrive.driveCartesian(.65, 0, 0);
+    robotDrive.driveCartesian(.8, 0, 0);
 
     try {
-      Thread.sleep(2000);
+      Thread.sleep(4000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
@@ -142,9 +149,9 @@ public class Robot extends TimedRobot {
     z = safety(z, prevz, .3);
 
     if (driver.getPOV() == -1) {
-      robotDrive.driveCartesian(y, x, z);
+      robotDrive.driveCartesian(y * yPower, x * xPower, z * zPower);
     } else {
-      robotDrive.drivePolar(.2, driver.getPOV(), 0.0);
+      robotDrive.drivePolar(precisePower, driver.getPOV(), 0.0);
     }
 
     prevx = x;
