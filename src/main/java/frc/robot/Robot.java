@@ -13,9 +13,11 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 
 public class Robot extends TimedRobot {
   private ADXRS450_Gyro gyro;
+  private UsbCamera camera;
 
   private Joystick driver;
   //private Joystick operator;
@@ -53,15 +55,18 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+    gyro = new ADXRS450_Gyro();
+    camera = CameraServer.startAutomaticCapture();
+
+    driver = new Joystick(Constants.kJoystickChannelDriver);
+    //operator = new Joystick(Constants.kJoystickChannelOperator);
+
     frontLeft = new WPI_TalonFX(Constants.kFrontLeftChannel);
     rearLeft = new WPI_TalonFX(Constants.kRearLeftChannel);
     frontRight = new WPI_TalonFX(Constants.kFrontRightChannel);
     rearRight = new WPI_TalonFX(Constants.kRearRightChannel);
-    
-    CameraServer.startAutomaticCapture();
 
-    // Invert the right side motors.
-    // You may need to change or remove this to match your robot.
+    // These ones need to be reversed for mecanum to work.
     frontLeft.setInverted(true);
     rearLeft.setInverted(true);
 
@@ -69,8 +74,6 @@ public class Robot extends TimedRobot {
     frontRight.setNeutralMode(NeutralMode.Coast);
     rearLeft.setNeutralMode(NeutralMode.Coast);
     rearRight.setNeutralMode(NeutralMode.Coast);
-
-    gyro = new ADXRS450_Gyro();
 
     robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
@@ -84,9 +87,6 @@ public class Robot extends TimedRobot {
     uptake = new Uptake(
       Constants.uptakeTopMotorIndex,
       Constants.uptakeBottomMotorIndex);
-
-    driver = new Joystick(Constants.kJoystickChannelDriver);
-    //operator = new Joystick(Constants.kJoystickChannelOperator);
   }
 
   private static double smooth(double val, double deadzone, double max) {
