@@ -115,24 +115,15 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     // Comment out the uptake if another team has better auto.
-    uptake.runAutonomousStart();
-
+    uptake.setOut();
     try {
       Thread.sleep(2000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    uptake.runAutonomousEnd();
+    uptake.stop();
 
-    robotDrive.driveCartesian(-0.8, 0, 0);
-
-    try {
-      Thread.sleep(6500);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-  
-    robotDrive.stopMotor();
+    robotDrive.driveCartesian(-1, 0, 0);
   }
 
   @Override

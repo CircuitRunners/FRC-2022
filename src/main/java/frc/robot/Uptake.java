@@ -39,22 +39,6 @@ public class Uptake
         this.outPower = outPower;
         this.inPower = inPower;
     }
-
-    /**
-     * Sets the motors to run during autonomous
-     */
-    public void runAutonomousStart() {
-        topMotor.set(outPower);
-        //bottomMotor.set(outPower);
-    }
-
-    /**
-     * Sets the motors to stop during autonomous.
-     */
-    public void runAutonomousEnd() {
-        topMotor.stopMotor();
-        //bottomMotor.stopMotor();
-    }
     
     /**
      * Runs the motors according to an axis.
@@ -82,6 +66,25 @@ public class Uptake
     {
         double axis = Util.buttonAxis(positive, negative);
         set(axis);
+    }
+
+    /**
+     * Eject.
+     */
+    public void setOut() {
+        set(1);
+    }
+
+    /**
+     * Receive.
+     */
+    public void setIn() {
+        set(-1);
+    }
+
+    public void stop() {
+        topMotor.stopMotor();
+        //bottomMotor.stopMotor();
     }
 }
 
