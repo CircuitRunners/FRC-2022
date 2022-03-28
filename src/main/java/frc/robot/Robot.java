@@ -4,14 +4,20 @@
 
 package frc.robot;
 
+// import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+// import java.util.Scanner;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
-
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 
@@ -161,6 +167,40 @@ public class Robot extends TimedRobot {
     uptake.set(
       driver.getRawButton(Constants.FLIGHT_TRIGGER_BUTTON),
       driver.getRawButton(Constants.FLIGHT_MIDDLE_BUTTON));
+
+    // Proof of concept, I'll discuss with you guys in person about this
+
+    /*
+     * Create TCP socket server on port 10022 and create a send loop, for now 
+     * it only sends some of the built in sensor data. I plan to use this to
+     * create a topdown view/some quality of life things on the driver station.
+     * 
+     * The port is obviously flexible, this is just an example
+     */
+    try (ServerSocket server = new ServerSocket(10022)) {
+        System.out.println("started ws server on port 10022");
+        BuiltInAccelerometer accelerometer = new BuiltInAccelerometer();
+        Socket client = server.accept();
+        OutputStream out = client.getOutputStream();
+        // Input would be taken here, can be used for future things like auto aim
+        // or auto shoot
+        // InputStream in = client.getInputStream();
+        // Scanner s = new Scanner(in, "UTF-8");
+        while (true) {
+            byte[] response = (
+              "X: " + accelerometer.getX() + "\n" +
+              "Y: " + accelerometer.getY() + "\n" +
+              "Z: " + accelerometer.getZ() + "\n" +
+              "Angle: " + gyro.getAngle() + "\n" +
+              "Rotation: " + gyro.getRotation2d() + "\n" +
+              "Time(UNIX): " + System.currentTimeMillis() // used to calculate ping
+            ).getBytes("UTF-8");
+            out.write(response, 0 , response.length);
+        }
+    }
+    catch (Exception E) {
+        System.out.println(E + "\n! FAILED TO START WS SERVER ON PORT 10022 !");
+    }
 
     /*
     double liftAxis = Util.buttonAxis(
