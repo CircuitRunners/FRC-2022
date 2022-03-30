@@ -11,6 +11,10 @@ public class Intake {
     /**
      * Motor that turns the intake up or down.
      */
+    private VictorSP indexer;
+    /**
+     * Motor that sucks balls into the uptakle.
+     */
     private VictorSP lifter;
     /**
      * Switch that checks if the lift is down.
@@ -63,6 +67,7 @@ public class Intake {
      */
     public void spinIn() {
         spinner.set(spinSpeed);
+        indexer.set(spinSpeed);
     }
 
     /**
@@ -72,6 +77,7 @@ public class Intake {
      */
     public void spinOut() {
         spinner.set(-spinSpeed);
+        indexer.set(-spinSpeed);
     }
 
     /**
@@ -79,6 +85,7 @@ public class Intake {
      */
     public void spinStop() {
         spinner.stopMotor();
+        indexer.stopMotor();
     }
 
     /**

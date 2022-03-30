@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
 import edu.wpi.first.cameraserver.CameraServer;
@@ -34,6 +35,8 @@ public class Robot extends TimedRobot {
   private double prevX = 0;
   private double prevY = 0;
   private double prevZ = 0;
+
+  private Timer timer = new Timer();
 
   /**
    * Power multiplier for the Y-axis, for vertical movement.
@@ -116,19 +119,24 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     // Comment out the uptake if another team has better auto.
     uptake.setOut();
-    try {
-      Thread.sleep(2000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-    uptake.stop();
-
-    robotDrive.driveCartesian(-1, 0, 0);
+    timer.reset();
+    timer.start();
   }
 
   @Override
   public void autonomousPeriodic() {
-
+    double time = timer.get();
+    if(time > 1.5 && time < 4){
+      uptake.stop();
+      robotDrive.driveCartesian(-.35,0,0);
+    }
+    if (time > 2.5 && time < 2.6){
+      robotDrive.driveCartesian(.1, 0, 0);;
+    }
+    if (time > 2.6){
+      robotDrive.stopMotor();
+    }
+    
   }
 
   @Override
