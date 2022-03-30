@@ -123,19 +123,38 @@ public class Robot extends TimedRobot {
     timer.start();
   }
 
-  @Override
+@Override
   public void autonomousPeriodic() {
     double time = timer.get();
-    if(time > 1.5 && time < 4){
+    if(time < 1.5){
+
+    }
+    else if(time > 1.5 && time < 4){
       uptake.stop();
       robotDrive.driveCartesian(-.35,0,0);
     }
-    if (time > 2.5 && time < 2.6){
+    else if (time > 2.5 && time < 2.6){
       robotDrive.driveCartesian(.1, 0, 0);;
     }
-    if (time > 2.6){
+   else  if (time > 2.6 && time < 3){
       robotDrive.stopMotor();
+      //intake.liftDown();
+    } 
+    /*
+    else if (time > 3 && time < 3.5){
+      intake.liftStop()
     }
+    else if(time > 3.5 && time < 4){
+      intake.spinIn()
+    }
+    else if(time > 4 && time < 4.5){
+      intake.spinStop()
+      robotDrive.driveCartesian(.5,0,0)
+    } else if(time > 4.5){
+      robotDrive.stopMotor()
+      uptake.setOut();
+    }
+    */
     
   }
 
