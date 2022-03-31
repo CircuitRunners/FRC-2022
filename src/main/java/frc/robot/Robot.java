@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
@@ -40,6 +41,8 @@ public class Robot extends TimedRobot {
   private double prevX = 0;
   private double prevY = 0;
   private double prevZ = 0;
+
+  private Timer timer = new Timer();
 
   /**
    * Power multiplier for the Y-axis, for vertical movement.
@@ -122,19 +125,43 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     // Comment out the uptake if another team has better auto.
     uptake.setOut();
-    try {
-      Thread.sleep(2000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-    uptake.stop();
-
-    robotDrive.driveCartesian(-1, 0, 0);
+    timer.reset();
+    timer.start();
   }
 
-  @Override
+@Override
   public void autonomousPeriodic() {
+    double time = timer.get();
+    if(time < 1.5){
 
+    }
+    else if(time > 1.5 && time < 4){
+      uptake.stop();
+      robotDrive.driveCartesian(-.35,0,0);
+    }
+    else if (time > 2.5 && time < 2.6){
+      robotDrive.driveCartesian(.1, 0, 0);;
+    }
+   else  if (time > 2.6 && time < 3){
+      robotDrive.stopMotor();
+      //intake.liftDown();
+    } 
+    /*
+    else if (time > 3 && time < 3.5){
+      intake.liftStop()
+    }
+    else if(time > 3.5 && time < 4){
+      intake.spinIn()
+    }
+    else if(time > 4 && time < 4.5){
+      intake.spinStop()
+      robotDrive.driveCartesian(.5,0,0)
+    } else if(time > 4.5){
+      robotDrive.stopMotor()
+      uptake.setOut();
+    }
+    */
+    
   }
 
   @Override
@@ -171,14 +198,14 @@ public class Robot extends TimedRobot {
     // Proof of concept, I'll discuss with you guys in person about this
 
     /*
-     * Create TCP socket server on port 10022 and create a send loop, for now 
+     * Create TCP socket server on a specified port and create a send loop, for now 
      * it only sends some of the built in sensor data. I plan to use this to
      * create a topdown view/some quality of life things on the driver station.
      * 
      * The port is obviously flexible, this is just an example
      */
-    try (ServerSocket server = new ServerSocket(10022)) {
-        System.out.println("started ws server on port 10022");
+    try (ServerSocket server = new ServerSocket(Constants.TCPSocketPort)) {
+        System.out.println("started ws server on port " + Constants.TCPSocketPort);
         BuiltInAccelerometer accelerometer = new BuiltInAccelerometer();
         Socket client = server.accept();
         OutputStream out = client.getOutputStream();
@@ -199,7 +226,7 @@ public class Robot extends TimedRobot {
         }
     }
     catch (Exception E) {
-        System.out.println(E + "\n! FAILED TO START WS SERVER ON PORT 10022 !");
+        System.out.println(E + "\n! FAILED TO START WS SERVER ON PORT " + Constants.TCPSocketPort + " !");
     }
 
     /*

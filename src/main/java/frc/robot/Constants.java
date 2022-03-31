@@ -47,5 +47,9 @@ public class Constants {
 
     public static final int intakeLimitSwitchBottomIndex = 0;
     public static final int intakeLimitSwitchTopIndex = 1;
+
+    // Set to 0 for disabled
+    public static final int TCPSocketPort = 10022;
   
+    public static final int solenoidChannel = 0;
 }
