@@ -29,12 +29,13 @@ public class ButtonManager {
     /**
      * Create a button manager with all default properties.
      */
-    public ButtonManager() {}
+    public ButtonManager() {
+    }
 
     /**
      * Update the button's state.
      * 
-     * @param newState The new button state.
+     * @param newState  The new button state.
      * @param deltaTime The time elapsed since the last frame.
      */
     public void update(boolean newState, double deltaTime) {

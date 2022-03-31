@@ -2,8 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 
-public class Uptake 
-{
+public class Uptake {
     /**
      * Top uptake motor controller, 775pro.
      */
@@ -11,7 +10,7 @@ public class Uptake
     /**
      * Bottom uptake motor controller, 775pro.
      */
-    //private VictorSP bottomMotor;
+    // private VictorSP bottomMotor;
 
     /**
      * Motor power when turning outward.
@@ -26,12 +25,12 @@ public class Uptake
     /**
      * Instantiates uptake motor controllers.
      *
-     * @param topIndex The PWM index of the top motor controller.
+     * @param topIndex    The PWM index of the top motor controller.
      * @param bottomIndex The PWM index of the bottom motor controller.
      */
     public Uptake(int topIndex, int bottomIndex) {
         topMotor = new VictorSP(topIndex);
-        //bottomMotor = new VictorSP(bottomIndex);
+        // bottomMotor = new VictorSP(bottomIndex);
     }
 
     public Uptake(int topIndex, int bottomIndex, double outPower, double inPower) {
@@ -39,7 +38,7 @@ public class Uptake
         this.outPower = outPower;
         this.inPower = inPower;
     }
-    
+
     /**
      * Runs the motors according to an axis.
      * 
@@ -53,17 +52,16 @@ public class Uptake
         double power = (axis > 0) ? outPower : inPower;
 
         topMotor.set(axis * power);
-        //bottomMotor.set(axis * power);
+        // bottomMotor.set(axis * power);
     }
-    
+
     /**
      * Runs the motors depending on what buttons are pressed.
      * 
      * @param positive the button that causes the motors to run forwards.
      * @param negative the button that causes the motors to run backwards.
      */
-    public void set(boolean positive, boolean negative)
-    {
+    public void set(boolean positive, boolean negative) {
         double axis = Util.buttonAxis(positive, negative);
         set(axis);
     }
@@ -84,7 +82,6 @@ public class Uptake
 
     public void stop() {
         topMotor.stopMotor();
-        //bottomMotor.stopMotor();
+        // bottomMotor.stopMotor();
     }
 }
-

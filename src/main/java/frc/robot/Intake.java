@@ -41,7 +41,8 @@ public class Intake {
         liftUpSwitch = new DigitalInput(liftUpSwitchIndex);
     }
 
-    public Intake(int spinnerIndex, int lifterIndex, int liftDownSwitchIndex, int liftUpSwitchIndex, double spinSpeed, double liftSpeed) {
+    public Intake(int spinnerIndex, int lifterIndex, int liftDownSwitchIndex, int liftUpSwitchIndex, double spinSpeed,
+            double liftSpeed) {
         this(spinnerIndex, lifterIndex, liftDownSwitchIndex, liftUpSwitchIndex);
         this.spinSpeed = spinSpeed;
         this.liftSpeed = liftSpeed;
@@ -132,7 +133,7 @@ public class Intake {
             liftStop();
         }
     }
-    
+
     /**
      * Stop moving the intake.
      */

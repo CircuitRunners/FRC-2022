@@ -27,7 +27,7 @@ public class Robot extends TimedRobot {
   private UsbCamera camera;
 
   private Joystick driver;
-  //private Joystick operator;
+  // private Joystick operator;
 
   private WPI_TalonFX frontLeft;
   private WPI_TalonFX rearLeft;
@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
   private WPI_TalonFX rearRight;
   private MecanumDrive robotDrive;
 
-  //private Intake intake;
+  // private Intake intake;
   private Uptake uptake;
 
   private double prevX = 0;
@@ -64,181 +64,182 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    gyro = new ADXRS450_Gyro();
-    camera = CameraServer.startAutomaticCapture();
+	gyro = new ADXRS450_Gyro();
+	camera = CameraServer.startAutomaticCapture();
 
-    driver = new Joystick(Constants.kJoystickChannelDriver);
-    //operator = new Joystick(Constants.kJoystickChannelOperator);
+	driver = new Joystick(Constants.kJoystickChannelDriver);
+	// operator = new Joystick(Constants.kJoystickChannelOperator);
 
-    frontLeft = new WPI_TalonFX(Constants.kFrontLeftChannel);
-    rearLeft = new WPI_TalonFX(Constants.kRearLeftChannel);
-    frontRight = new WPI_TalonFX(Constants.kFrontRightChannel);
-    rearRight = new WPI_TalonFX(Constants.kRearRightChannel);
+	frontLeft = new WPI_TalonFX(Constants.kFrontLeftChannel);
+	rearLeft = new WPI_TalonFX(Constants.kRearLeftChannel);
+	frontRight = new WPI_TalonFX(Constants.kFrontRightChannel);
+	rearRight = new WPI_TalonFX(Constants.kRearRightChannel);
 
-    // These ones need to be reversed for mecanum to work.
-    frontLeft.setInverted(true);
-    rearLeft.setInverted(true);
+	// These ones need to be reversed for mecanum to work.
+	frontLeft.setInverted(true);
+	rearLeft.setInverted(true);
 
-    frontLeft.setNeutralMode(NeutralMode.Coast);
-    frontRight.setNeutralMode(NeutralMode.Coast);
-    rearLeft.setNeutralMode(NeutralMode.Coast);
-    rearRight.setNeutralMode(NeutralMode.Coast);
+	frontLeft.setNeutralMode(NeutralMode.Coast);
+	frontRight.setNeutralMode(NeutralMode.Coast);
+	rearLeft.setNeutralMode(NeutralMode.Coast);
+	rearRight.setNeutralMode(NeutralMode.Coast);
 
-    robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
+	robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-    /*
-    intake = new Intake(
-      Constants.intakeSpinMotorIndex,
-      Constants.intakeLiftMotorIndex,
-      Constants.intakeLimitSwitchBottomIndex,
-      Constants.intakeLimitSwitchTopIndex);
-    */
-    uptake = new Uptake(
-      Constants.uptakeTopMotorIndex,
-      Constants.uptakeBottomMotorIndex);
+	/*
+	 * intake = new Intake(
+	 * Constants.intakeSpinMotorIndex,
+	 * Constants.intakeLiftMotorIndex,
+	 * Constants.intakeLimitSwitchBottomIndex,
+	 * Constants.intakeLimitSwitchTopIndex);
+	 */
+	uptake = new Uptake(
+		Constants.uptakeTopMotorIndex,
+		Constants.uptakeBottomMotorIndex);
   }
 
   private static double smooth(double val, double deadzone, double max) {
-    if (Math.abs(val) < deadzone) {
-      return 0;
-    } else if (val > max) {
-      return max;
-    } else {
-      return Math.abs(val) * Math.abs(val) * (val / Math.abs(val));
-    }
+	if (Math.abs(val) < deadzone) {
+	  return 0;
+	} else if (val > max) {
+	  return max;
+	} else {
+	  return Math.abs(val) * Math.abs(val) * (val / Math.abs(val));
+	}
   }
 
   private static double safety(double cmdVal, double prevVal, double maxChange) {
-    double diff = cmdVal - prevVal;
-    if (Math.abs(diff) < maxChange) {
-      return cmdVal;
-    } else {
-      if (diff > 0) {
-        return prevVal + maxChange;
-      } else {
-        return prevVal - maxChange;
-      }
-    }
+	double diff = cmdVal - prevVal;
+	if (Math.abs(diff) < maxChange) {
+	  return cmdVal;
+	} else {
+	  if (diff > 0) {
+		return prevVal + maxChange;
+	  } else {
+		return prevVal - maxChange;
+	  }
+	}
   }
 
   @Override
   public void autonomousInit() {
-    // Comment out the uptake if another team has better auto.
-    uptake.setOut();
-    timer.reset();
-    timer.start();
+	// Comment out the uptake if another team has better auto.
+	uptake.setOut();
+	timer.reset();
+	timer.start();
   }
 
-@Override
+  @Override
   public void autonomousPeriodic() {
-    double time = timer.get();
-    if(time < 1.5){
+	double time = timer.get();
+	if (time < 1.5) {
 
-    }
-    else if(time > 1.5 && time < 4){
-      uptake.stop();
-      robotDrive.driveCartesian(-.35,0,0);
-    }
-    else if (time > 2.5 && time < 2.6){
-      robotDrive.driveCartesian(.1, 0, 0);;
-    }
-   else  if (time > 2.6 && time < 3){
-      robotDrive.stopMotor();
-      //intake.liftDown();
-    } 
-    /*
-    else if (time > 3 && time < 3.5){
-      intake.liftStop()
-    }
-    else if(time > 3.5 && time < 4){
-      intake.spinIn()
-    }
-    else if(time > 4 && time < 4.5){
-      intake.spinStop()
-      robotDrive.driveCartesian(.5,0,0)
-    } else if(time > 4.5){
-      robotDrive.stopMotor()
-      uptake.setOut();
-    }
-    */
-    
+	} else if (time > 1.5 && time < 4) {
+	  uptake.stop();
+	  robotDrive.driveCartesian(-.35, 0, 0);
+	} else if (time > 2.5 && time < 2.6) {
+	  robotDrive.driveCartesian(.1, 0, 0);
+	  ;
+	} else if (time > 2.6 && time < 3) {
+	  robotDrive.stopMotor();
+	  // intake.liftDown();
+	}
+	/*
+	 * else if (time > 3 && time < 3.5){
+	 * intake.liftStop()
+	 * }
+	 * else if(time > 3.5 && time < 4){
+	 * intake.spinIn()
+	 * }
+	 * else if(time > 4 && time < 4.5){
+	 * intake.spinStop()
+	 * robotDrive.driveCartesian(.5,0,0)
+	 * } else if(time > 4.5){
+	 * robotDrive.stopMotor()
+	 * uptake.setOut();
+	 * }
+	 */
+
   }
 
   @Override
   public void teleopPeriodic() {
-    // Use the joystick X axis for lateral movement, Y axis for forward
-    // movement, and Z axis for rotation.
+	// Use the joystick X axis for lateral movement, Y axis for forward
+	// movement, and Z axis for rotation.
 
-    double x = driver.getRawAxis(Constants.FLIGHT_X_AXIS);
-    double y = -driver.getRawAxis(Constants.FLIGHT_Y_AXIS);
-    double z = driver.getRawAxis(Constants.FLIGHT_Z_AXIS);
+	double x = driver.getRawAxis(Constants.FLIGHT_X_AXIS);
+	double y = -driver.getRawAxis(Constants.FLIGHT_Y_AXIS);
+	double z = driver.getRawAxis(Constants.FLIGHT_Z_AXIS);
 
-    x = smooth(x, .05, .9);
-    y = smooth(y, .05, .9);
-    z = smooth(z, .05, .7);
+	x = smooth(x, .05, .9);
+	y = smooth(y, .05, .9);
+	z = smooth(z, .05, .7);
 
-    x = safety(x, prevX, .3);
-    y = safety(y, prevY, .3);
-    z = safety(z, prevZ, .3);
+	x = safety(x, prevX, .3);
+	y = safety(y, prevY, .3);
+	z = safety(z, prevZ, .3);
 
-    if (driver.getPOV() == -1) {
-      robotDrive.driveCartesian(y * yPower, x * xPower, z * zPower);
-    } else {
-      robotDrive.drivePolar(precisePower, driver.getPOV(), 0.0);
-    }
+	if (driver.getPOV() == -1) {
+	  robotDrive.driveCartesian(y * yPower, x * xPower, z * zPower);
+	} else {
+	  robotDrive.drivePolar(precisePower, driver.getPOV(), 0.0);
+	}
 
-    prevX = x;
-    prevY = y;
-    prevZ = z;
+	prevX = x;
+	prevY = y;
+	prevZ = z;
 
-    uptake.set(
-      driver.getRawButton(Constants.FLIGHT_TRIGGER_BUTTON),
-      driver.getRawButton(Constants.FLIGHT_MIDDLE_BUTTON));
+	uptake.set(
+		driver.getRawButton(Constants.FLIGHT_TRIGGER_BUTTON),
+		driver.getRawButton(Constants.FLIGHT_MIDDLE_BUTTON)
+	);
 
-    // Proof of concept, I'll discuss with you guys in person about this
+	// Proof of concept, I'll discuss with you guys in person about this
 
-    /*
-     * Create TCP socket server on a specified port and create a send loop, for now 
-     * it only sends some of the built in sensor data. I plan to use this to
-     * create a topdown view/some quality of life things on the driver station.
-     * 
-     * The port is obviously flexible, this is just an example
-     */
-    try (ServerSocket server = new ServerSocket(Constants.TCPSocketPort)) {
-        System.out.println("started ws server on port " + Constants.TCPSocketPort);
-        BuiltInAccelerometer accelerometer = new BuiltInAccelerometer();
-        Socket client = server.accept();
-        OutputStream out = client.getOutputStream();
-        // Input would be taken here, can be used for future things like auto aim
-        // or auto shoot
-        // InputStream in = client.getInputStream();
-        // Scanner s = new Scanner(in, "UTF-8");
-        while (true) {
-            byte[] response = (
-              "X: " + accelerometer.getX() + "\n" +
-              "Y: " + accelerometer.getY() + "\n" +
-              "Z: " + accelerometer.getZ() + "\n" +
-              "Angle: " + gyro.getAngle() + "\n" +
-              "Rotation: " + gyro.getRotation2d() + "\n" +
-              "Time(UNIX): " + System.currentTimeMillis() // used to calculate ping
-            ).getBytes("UTF-8");
-            out.write(response, 0 , response.length);
-        }
-    }
-    catch (Exception E) {
-        System.out.println(E + "\n! FAILED TO START WS SERVER ON PORT " + Constants.TCPSocketPort + " !");
-    }
+	/*
+	 * Create TCP socket server on a specified port and create a send loop, for now
+	 * it only sends some of the built in sensor data. I plan to use this to
+	 * create a topdown view/some quality of life things on the driver station.
+	 * 
+	 * The port is obviously flexible, this is just an example
+	 */
 
-    /*
-    double liftAxis = Util.buttonAxis(
-      operator.getRawButton(Constants.XBOX_B_BUTTON),
-      operator.getRawButton(Constants.XBOX_Y_BUTTON));
-    intake.liftAxis(liftAxis);
+	 // skip this if the specified port is 0 
+	if (Constants.TCPSocketPort > 0) {
+		try (ServerSocket server = new ServerSocket(Constants.TCPSocketPort)) {
+		System.out.println("started ws server on port " + Constants.TCPSocketPort);
+		BuiltInAccelerometer accelerometer = new BuiltInAccelerometer();
+		Socket client = server.accept();
+		OutputStream out = client.getOutputStream();
+		// Input would be taken here, can be used for future things like auto aim
+		// or auto shoot
+		// InputStream in = client.getInputStream();
+		// Scanner s = new Scanner(in, "UTF-8");
+		while (true) {
+			byte[] response = ("X: " + accelerometer.getX() + "\n" +
+				"Y: " + accelerometer.getY() + "\n" +
+				"Z: " + accelerometer.getZ() + "\n" +
+				"Angle: " + gyro.getAngle() + "\n" +
+				"Rotation: " + gyro.getRotation2d() + "\n" +
+				"Time(UNIX): " + System.currentTimeMillis() // used to calculate ping
+			).getBytes("UTF-8");
+			out.write(response, 0, response.length);
+		}
+		} catch (Exception E) {
+		System.out.println(E + "\n! FAILED TO START WS SERVER ON PORT " + Constants.TCPSocketPort + " !");
+		}
+	}
 
-    double spinAxis = Util.buttonAxis(
-      operator.getRawButton(Constants.XBOX_A_BUTTON),
-      operator.getRawButton(Constants.XBOX_X_BUTTON));
-    intake.spinAxis(spinAxis);
-    */
+	/*
+	 * double liftAxis = Util.buttonAxis(
+	 * operator.getRawButton(Constants.XBOX_B_BUTTON),
+	 * operator.getRawButton(Constants.XBOX_Y_BUTTON));
+	 * intake.liftAxis(liftAxis);
+	 * 
+	 * double spinAxis = Util.buttonAxis(
+	 * operator.getRawButton(Constants.XBOX_A_BUTTON),
+	 * operator.getRawButton(Constants.XBOX_X_BUTTON));
+	 * intake.spinAxis(spinAxis);
+	 */
   }
 }
