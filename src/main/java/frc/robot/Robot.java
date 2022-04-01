@@ -21,7 +21,7 @@ public class Robot extends TimedRobot {
   private UsbCamera camera;
 
   private Joystick driver;
-  //private Joystick operator;
+  private Joystick operator;
 
   private WPI_TalonFX frontLeft;
   private WPI_TalonFX rearLeft;
@@ -31,6 +31,7 @@ public class Robot extends TimedRobot {
 
   //private Intake intake;
   private Uptake uptake;
+  //private Climber climber;
 
   private double prevX = 0;
   private double prevY = 0;
@@ -62,7 +63,7 @@ public class Robot extends TimedRobot {
     camera = CameraServer.startAutomaticCapture();
 
     driver = new Joystick(Constants.kJoystickChannelDriver);
-    //operator = new Joystick(Constants.kJoystickChannelOperator);
+    operator = new Joystick(Constants.kJoystickChannelOperator);
 
     frontLeft = new WPI_TalonFX(Constants.kFrontLeftChannel);
     rearLeft = new WPI_TalonFX(Constants.kRearLeftChannel);
@@ -90,6 +91,8 @@ public class Robot extends TimedRobot {
     uptake = new Uptake(
       Constants.uptakeTopMotorIndex,
       Constants.uptakeBottomMotorIndex);
+
+    //climber = new Climber();
   }
 
   private static double smooth(double val, double deadzone, double max) {
@@ -200,5 +203,16 @@ public class Robot extends TimedRobot {
       operator.getRawButton(Constants.XBOX_X_BUTTON));
     intake.spinAxis(spinAxis);
     */
+
+    /*
+    if(operator.getRawButtonPressed(Constants.XBOX_RBUMPER_BUTTON)){
+      climber.setClimbSolenoid(true);
+    }
+
+    if(operator.getRawButtonPressed(Constants.XBOX_LBUMPER_BUTTON)){
+      climber.setClimbSolenoid(false);
+    }
+    */
+
   }
 }
