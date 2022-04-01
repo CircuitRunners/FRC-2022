@@ -95,7 +95,8 @@ public class Robot extends TimedRobot {
 	 */
 	uptake = new Uptake(
 		Constants.uptakeTopMotorIndex,
-		Constants.uptakeBottomMotorIndex);
+		Constants.uptakeBottomMotorIndex
+	);
   }
 
   private static double smooth(double val, double deadzone, double max) {
@@ -103,23 +104,20 @@ public class Robot extends TimedRobot {
 	  return 0;
 	} else if (val > max) {
 	  return max;
-	} else {
-	  return Math.abs(val) * Math.abs(val) * (val / Math.abs(val));
-	}
+	} 
+	return Math.abs(val) * Math.abs(val) * (val / Math.abs(val));
   }
 
-  private static double safety(double cmdVal, double prevVal, double maxChange) {
-	double diff = cmdVal - prevVal;
-	if (Math.abs(diff) < maxChange) {
-	  return cmdVal;
-	} else {
-	  if (diff > 0) {
-		return prevVal + maxChange;
-	  } else {
+	private static double safety(double cmdVal, double prevVal, double maxChange) {
+		double diff = cmdVal - prevVal;
+		if (Math.abs(diff) < maxChange) {
+			return cmdVal;
+		}
+		if (diff > 0) {
+			return prevVal + maxChange;
+		}
 		return prevVal - maxChange;
-	  }
 	}
-  }
 
   @Override
   public void autonomousInit() {
@@ -133,15 +131,14 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
 	double time = timer.get();
 	if (time < 1.5) {
-
+		// do nothing
 	} else if (time > 1.5 && time < 4) {
-	  uptake.stop();
-	  robotDrive.driveCartesian(-.35, 0, 0);
+		uptake.stop();
+		robotDrive.driveCartesian(-.35, 0, 0);
 	} else if (time > 2.5 && time < 2.6) {
-	  robotDrive.driveCartesian(.1, 0, 0);
-	  ;
+		robotDrive.driveCartesian(.1, 0, 0);
 	} else if (time > 2.6 && time < 3) {
-	  robotDrive.stopMotor();
+		robotDrive.stopMotor();
 	  // intake.liftDown();
 	}
 	/*
@@ -207,7 +204,7 @@ public class Robot extends TimedRobot {
 	 // skip this if the specified port is 0 
 	if (Constants.TCPSocketPort > 0) {
 		try (ServerSocket server = new ServerSocket(Constants.TCPSocketPort)) {
-		System.out.println("started ws server on port " + Constants.TCPSocketPort);
+		System.out.println("started Tcp server on port " + Constants.TCPSocketPort);
 		BuiltInAccelerometer accelerometer = new BuiltInAccelerometer();
 		Socket client = server.accept();
 		OutputStream out = client.getOutputStream();
@@ -226,7 +223,7 @@ public class Robot extends TimedRobot {
 			out.write(response, 0, response.length);
 		}
 		} catch (Exception E) {
-		System.out.println(E + "\n! FAILED TO START WS SERVER ON PORT " + Constants.TCPSocketPort + " !");
+			System.out.println(E + "\n! ERROR OCCURED ON PORT " + Constants.TCPSocketPort + " !");
 		}
 	}
 
