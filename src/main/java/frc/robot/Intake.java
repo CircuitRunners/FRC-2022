@@ -37,8 +37,8 @@ public class Intake {
     public Intake(int spinnerIndex, int lifterIndex, int liftDownSwitchIndex, int liftUpSwitchIndex) {
         spinner = new VictorSP(spinnerIndex);
         lifter = new VictorSP(lifterIndex);
-        liftDownSwitch = new DigitalInput(liftDownSwitchIndex);
-        liftUpSwitch = new DigitalInput(liftUpSwitchIndex);
+        /*liftDownSwitch = new DigitalInput(liftDownSwitchIndex);
+        liftUpSwitch = new DigitalInput(liftUpSwitchIndex);*/
     }
 
     public Intake(int spinnerIndex, int lifterIndex, int liftDownSwitchIndex, int liftUpSwitchIndex, double spinSpeed, double liftSpeed) {
@@ -115,22 +115,14 @@ public class Intake {
      * Raise the intake.
      */
     public void liftUp() {
-        if (!liftUpSwitch.get()) {
-            lifter.set(liftSpeed);
-        } else {
-            liftStop();
-        }
+        lifter.set(liftSpeed);
     }
 
     /**
      * Lower the intake.
      */
     public void liftDown() {
-        if (!liftDownSwitch.get()) {
-            lifter.set(-liftSpeed);
-        } else {
-            liftStop();
-        }
+        lifter.set(-liftSpeed);
     }
     
     /**
